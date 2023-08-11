@@ -1,0 +1,25 @@
+# 1
+SELECT email from Person
+group by email
+having count(email) > 1;
+
+// This query groups the records by email address and then filters the grouped results to return email addresses where the count is greater than one. It ensures that only distinct email addresses with duplicate occurrences are returned. It's an efficient way to identify duplicate email addresses.
+
+# 2.
+SELECT DISTINCT(p1.email) from Person p1, Person p2
+where p1.id <> p2.id AND p1.email = p2.email;
+
+//self-join to join the "Person" table with itself using aliases p1 and p2. It checks for non-equal IDs and equal email addresses, effectively identifying duplicate email addresses. However, it does not group the results, so you may get duplicate email addresses in the output.
+
+#3. 
+SELECT DISTINCT(p1.email) from 
+Person p1 JOIN Person p2 ON
+p1.email = p2.email AND p1.id <> p2.id;
+
+//uses the explicit JOIN syntax. It also checks for non-equal IDs and equal email addresses to identify duplicates. Like Query 2, it does not group the results, so you may get duplicate email addresses in the output.
+
+// Differences and Comparisons:
+// Query 1 is the most straightforward and efficient way to identify duplicate email addresses. It groups the results and only returns distinct duplicates.
+// Query 2 and Query 3 use self-joins to identify duplicates, but they do not group the results. This means that they might return duplicate email addresses if multiple records have the same duplicate email.
+// Query 2 uses the older implicit join syntax with a comma (,), whereas Query 3 uses the modern explicit JOIN syntax.
+// In summary, Query 1 is the preferred approach for identifying and retrieving distinct duplicate email addresses, while Query 2 and Query 3 may produce duplicate results if not handled carefully.
